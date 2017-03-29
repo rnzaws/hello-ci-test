@@ -1,9 +1,4 @@
 
-machine:
-
-  timezone:
-    UTC
-
 dependencies:
   override:
 		- mkdir -p ~/.go_project/src/github.com/${CIRCLE_PROJECT_USERNAME}
