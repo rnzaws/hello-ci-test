@@ -1,9 +1,14 @@
 
 machine:
+  python:
+    version: 2.7.3
   services:
     - docker
 
 dependencies:
+  pre:
+    - pip install awscli
+
   override:
     - mkdir -p ~/.go_project/src/github.com/${CIRCLE_PROJECT_USERNAME}
     - ln -s ${HOME}/${CIRCLE_PROJECT_REPONAME} ${HOME}/.go_project/src/github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}
@@ -11,9 +16,14 @@ dependencies:
     - go build -v
     - docker info
     - docker build --rm=false -t rnzaws/hello-ci-test .
+    - $(aws ecr get-login --region us-east-1)
+    - docker tag test:latest 702786411213.dkr.ecr.us-east-1.amazonaws.com/test:latest
+    - docker push 702786411213.dkr.ecr.us-east-1.amazonaws.com/test:latest
 
 test:
   override:
     - docker run -d -p 8080:8080 rnzaws/hello-ci-test; sleep 10
     - curl --retry 10 --retry-delay 5 -v http://localhost:8080
+
+
 
