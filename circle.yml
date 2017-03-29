@@ -17,7 +17,8 @@ dependencies:
     - docker info
     - docker build --rm=false -t rnzaws/hello-ci-test .
     - $(aws ecr get-login --region us-east-1)
-    - docker tag rnzaws:hello-ci-test 702786411213.dkr.ecr.us-east-1.amazonaws.com/test:latest
+    - docker images
+    - docker tag rnzaws/hello-ci-test 702786411213.dkr.ecr.us-east-1.amazonaws.com/test:latest
     - docker push 702786411213.dkr.ecr.us-east-1.amazonaws.com/test:latest
 
 test:
