@@ -5,5 +5,5 @@ ADD hello-ci-test /home/hello-ci-test
 
 WORKDIR /home
 
-CMD /home/hello-ci-test
+ENTRYPOINT [ "/home/hello-ci-test" ]
 
